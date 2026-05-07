@@ -7,15 +7,14 @@ int cnt, vis[105 * 105], match[105 * 105];
 pair<int, int> id[105][105];
 void add(int u, int v) {
   g[u].push_back(v);
-  g[v].push_back(u);
 }
 bool dfs(int u) {
-  memset(vis, 0, sizeof(vis));
   for (int x : g[u])
     if (!vis[x]) {
       vis[x] = true;
       if (!match[x] || dfs(match[x])) {
         match[x] = u;
+        vis[x] = 0;
         return true;
       }
     }
@@ -27,6 +26,7 @@ int main() {
   while (T--) {
     cnt = 1;
     memset(a, 0, sizeof(a));
+    memset(id, 0, sizeof(0));
     int H, w;
     cin >> H >> w;
     for (int i = 1; i <= H * w; i++)
@@ -46,21 +46,21 @@ int main() {
     }
     for (int i = 1; i <= H; i++)
       for (int j = 1; j <= w; j++) {
+        if (a[i][j] == '*')
+          id[i][j].first = cnt;
         if (j == w || a[i][j] == '#') {
           cnt++;
         }
-        if (a[i][j] == '*')
-          id[i][j].first = cnt;
       }
     int mid = cnt;
     cnt++;
     for (int j = 1; j <= w; j++)
       for (int i = 1; i <= H; i++) {
+        if (a[i][j] == '*')
+          id[i][j].second = cnt;
         if (i == H || a[i][j] == '#') {
           cnt++;
         }
-        if (a[i][j] == '*')
-          id[i][j].second = cnt;
       }
     for (int i = 1; i <= H; i++)
       for (int j = 1; j <= w; j++)
@@ -69,6 +69,7 @@ int main() {
         }
     int ans = 0;
     memset(match, 0, sizeof(match));
+    memset(vis, 0, sizeof(vis));
     for (int i = 1; i <= mid; i++)
       if (dfs(i))
         ans++;

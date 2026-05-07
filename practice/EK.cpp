@@ -12,7 +12,6 @@ void add(int u, int v, int c) {
 int pre[205], n, m, s, t;
 int mf[205];
 bool bfs() {
-  memset(mf, 0, sizeof(mf));
   queue<int> q;
   q.push(s);
   mf[s] = 1e9;

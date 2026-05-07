@@ -11,8 +11,11 @@
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-std=c++17",
-                "-Wall",
+                "-Wall"
             ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
