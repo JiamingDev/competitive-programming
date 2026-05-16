@@ -12,33 +12,28 @@ signed main() {
     for (int i = 0; i < n; i++)
       cin >> a[i];
     sort(a.begin(), a.end());
-    if (a[0] > 0) {
-      cout << n * a[n - 1] << "\n";
-      continue;
+    vector<int> v1, v2;
+    for (int i = 0; i < n - 1; i++)
+      if (v1.size() && v1.back() == a[i])
+        v2.push_back(a[i]);
+      else
+        v1.push_back(a[i]);
+    int t = 0;
+    a[0] = a[n - 1];
+    for (int x : v1)
+      a[++t] = x;
+    for (int x : v2)
+      a[++t] = x;
+    int mx = a[0], mw = 0, ans = 0;
+    vector<int> vis(n + 1);
+    for (int i = 0; i < n; i++) {
+      if (a[i] < n)
+        vis[a[i]]++;
+      while (vis[mw])
+        mw++;
+      ans += mx + mw;
     }
-    if (n == 1) {
-      cout << 1 << "\n";
-      continue;
-    }
-    if (a[n - 1] == n - 1) {
-      cout << n * n + (n - 1) * (n - 2) / 2 << "\n";
-      continue;
-    }
-    int en = -1;
-    int maxv = a[n - 1];
-    a.erase(unique(a.begin(), a.end()), a.end());
-    for (int i = 0; i < a.size(); i++)
-      if (a[i] != i) {
-        en = i;
-        break;
-      }
-    if (en == -1)
-      en = a.back() + 1;
-    if (maxv == en - 1) {
-      cout << n * (en - 1) + (en - 1) * (en - 2) / 2 + en + (n - en) * en << "\n";
-      continue;
-    }
-    cout << en * (en + 1) / 2 + n * maxv + en * (n - en - 1) << "\n";
+    cout << ans << "\n";
   }
   return 0;
 }
