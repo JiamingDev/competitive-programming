@@ -19,8 +19,8 @@ signed main() {
     for (int i = 1; i <= n; i++)
       cin >> a[i];
     vi mxpre(n + 2);
-    for (int i = 2; i <= n; i += 2)
-      mxpre[i + 1] = max(mxpre[i - 2], a[i] - a[i - 1]);
+    for (int i = 3; i <= n + 1; i += 2)
+      mxpre[i] = max(mxpre[i - 2], a[i - 1] - a[i - 2]);
     if (n % 2 == 0) {
       cout << mxpre[n + 1] << "\n";
     } else {
@@ -30,7 +30,7 @@ signed main() {
       int ans = 2e18;
       for (int i = 1; i <= n; i += 2)
         ans = min(ans, max(mxpre[i], mxsuf[i]));
-      cout << ans << "\n";
+      cout << max(1ll, ans) << "\n";
     }
   }
   return 0;
